@@ -8,7 +8,6 @@
 
 #include "glad.h"
 #include <glfw3.h>
-#include <iostream>
 
 #include "FoxGLFWSetup.hpp"
 #include "FoxRendererSetup.hpp"
@@ -29,9 +28,6 @@ int main() {
     while (!glfwWindowShouldClose(window)) {
         timeManager.update();
         float deltaTime = timeManager.getDeltaTime();
-
-        glClearColor(0.7f, 0.3f, 0.3f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         sceneSwitcher.update(deltaTime);
         sceneSwitcher.render();
