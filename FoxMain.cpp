@@ -10,44 +10,25 @@
 #include <glfw3.h>
 #include <iostream>
 
+#include "FoxGLFWSetup.hpp"
+#include "FoxRendererSetup.hpp"
 #include "FoxSceneSwitcher.hpp"
+#include "FoxTimeManager.hpp"
 
 int main() {
-    glfwInit();
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    fox::gl::FoxGLFWSetup glfwSetup;
+    GLFWwindow* window = glfwSetup.getWindow();
 
-    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", NULL, NULL);
-    if (window == NULL) {
-        std::cout << "Failed to create GLFW window" << std::endl;
-        glfwTerminate();
-        return -1;
-    }
-    glfwMakeContextCurrent(window);
-    glfwSetFramebufferSizeCallback(window, fox::utils::framebuffer_size_callback);
-
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-        std::cout << "Failed to initialize GLAD" << std::endl;
-        return -1;
-    }
-
-    glEnable(GL_DEBUG_OUTPUT);
-    glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
-    glDebugMessageCallback(fox::utils::MessageCallback, 0);
-
-    glEnable(GL_DEPTH_TEST);
+    fox::gl::FoxRendererSetup rendererSetup;
 
     fox::utils::FoxSceneSwitcher sceneSwitcher(window);
     sceneSwitcher.switchTo("FoxScene");
 
-    float lastFrame = 0.0f;
-    float deltaTime = 0.0f;
+    fox::utils::FoxTimeManager timeManager;
 
     while (!glfwWindowShouldClose(window)) {
-        float currentFrame = glfwGetTime();
-        float deltaTime = currentFrame - lastFrame;
-        lastFrame = currentFrame;
+        timeManager.update();
+        float deltaTime = timeManager.getDeltaTime();
 
         glClearColor(0.7f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -64,4 +45,3 @@ int main() {
     glfwTerminate();
     return 0;
 }
-

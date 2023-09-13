@@ -140,8 +140,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="FoxCamera.cpp" />
+    <ClCompile Include="FoxGLFWSetup.cpp" />
+    <ClCompile Include="FoxRendererSetup.cpp" />
     <ClCompile Include="FoxScene.cpp" />
     <ClCompile Include="FoxSceneSwitcher.cpp" />
+    <ClCompile Include="FoxTimeManager.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="FoxMain.cpp" />
     <ClCompile Include="FoxUtils.cpp" />
@@ -153,8 +156,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FoxCamera.hpp" />
+    <ClInclude Include="FoxGLFWSetup.hpp" />
+    <ClInclude Include="FoxRendererSetup.hpp" />
     <ClInclude Include="FoxScene.hpp" />
     <ClInclude Include="FoxSceneSwitcher.hpp" />
+    <ClInclude Include="FoxTimeManager.hpp" />
     <ClInclude Include="glad.h" />
     <ClInclude Include="FoxGlobals.hpp" />
     <ClInclude Include="json.hpp" />

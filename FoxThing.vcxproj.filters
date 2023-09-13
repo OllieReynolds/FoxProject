@@ -40,6 +40,12 @@
     <Filter Include="Source Files\scenes">
       <UniqueIdentifier>{192f0b02-506d-4ed5-989d-667bbd1fdb0b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\gl">
+      <UniqueIdentifier>{1f847cde-9918-4c49-a9f3-55d92f74dff8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\gl">
+      <UniqueIdentifier>{70641001-db86-439e-8323-8b387875de66}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FoxMain.cpp">
@@ -59,6 +65,15 @@
     </ClCompile>
     <ClCompile Include="FoxSceneSwitcher.cpp">
       <Filter>Source Files\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="FoxTimeManager.cpp">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="FoxGLFWSetup.cpp">
+      <Filter>Source Files\gl</Filter>
+    </ClCompile>
+    <ClCompile Include="FoxRendererSetup.cpp">
+      <Filter>Source Files\gl</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -108,6 +123,15 @@
     </ClInclude>
     <ClInclude Include="FoxSceneSwitcher.hpp">
       <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="FoxTimeManager.hpp">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="FoxGLFWSetup.hpp">
+      <Filter>Header Files\gl</Filter>
+    </ClInclude>
+    <ClInclude Include="FoxRendererSetup.hpp">
+      <Filter>Header Files\gl</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
