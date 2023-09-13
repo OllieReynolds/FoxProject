@@ -14,14 +14,14 @@
 #include <glfw3.h>
 #include <iostream>
 
-#include "utils.hpp"
-#include "globals.hpp"
+#include "FoxUtils.hpp"
+#include "FoxGlobals.hpp"
 
 int main() {
     tinygltf::Model model;
-    fox_utils::GLTFModelData modelData;
+    fox::utils::GLTFModelData modelData;
 
-    if (!fox_utils::LoadGLTFModel("C:\\Users\\cubed\\FoxThing\\data\\models\\fox\\scene.gltf", model, modelData)) {
+    if (!fox::utils::LoadGLTFModel("C:\\Users\\cubed\\FoxThing\\data\\models\\fox\\scene.gltf", model, modelData)) {
         return -1;
     }
 
@@ -37,9 +37,9 @@ int main() {
         return -1;
     }
     glfwMakeContextCurrent(window);
-    glfwSetFramebufferSizeCallback(window, fox_utils::framebuffer_size_callback);
-    glfwSetCursorPosCallback(window, fox_utils::mouse_callback);
-    glfwSetMouseButtonCallback(window, fox_utils::mouse_button_callback);
+    glfwSetFramebufferSizeCallback(window, fox::utils::framebuffer_size_callback);
+    glfwSetCursorPosCallback(window, fox::utils::mouse_callback);
+    glfwSetMouseButtonCallback(window, fox::utils::mouse_button_callback);
     glfwSetWindowUserPointer(window, &camera);
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
@@ -49,11 +49,11 @@ int main() {
 
     glEnable(GL_DEBUG_OUTPUT);
     glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
-    glDebugMessageCallback(fox_utils::MessageCallback, 0);
+    glDebugMessageCallback(fox::utils::MessageCallback, 0);
 
     glEnable(GL_DEPTH_TEST);
 
-    unsigned int shaderProgram = fox_utils::compileShader(
+    unsigned int shaderProgram = fox::utils::compileShader(
         "C:\\Users\\cubed\\FoxThing\\data\\shaders\\test.vert",
         "C:\\Users\\cubed\\FoxThing\\data\\shaders\\test.frag"
     );
@@ -63,7 +63,7 @@ int main() {
     std::vector<float> positionVec(modelData.positionBuffer, modelData.positionBuffer + numVertices * 3);
     std::vector<float> normalVec(modelData.normalBuffer, modelData.normalBuffer + numVertices * 3);
     std::vector<float> texCoordVec(modelData.texCoordBuffer, modelData.texCoordBuffer + numVertices * 2);
-    std::vector<float> interleavedData = fox_utils::interleaveData(positionVec, normalVec, texCoordVec, 8);
+    std::vector<float> interleavedData = fox::utils::interleaveData(positionVec, normalVec, texCoordVec, 8);
 
     unsigned int VBO, VAO;
     glGenVertexArrays(1, &VAO);
@@ -82,7 +82,7 @@ int main() {
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 
-    unsigned int foxTexUnit = fox_utils::loadTexture("C:\\Users\\cubed\\FoxThing\\data\\models\\fox\\textures\\fox_material_baseColor.png");
+    unsigned int foxTexUnit = fox::utils::loadTexture("C:\\Users\\cubed\\FoxThing\\data\\models\\fox\\textures\\fox_material_baseColor.png");
 
     glm::mat4 projection = glm::perspective(glm::radians(90.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
 
@@ -94,7 +94,7 @@ int main() {
         float deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
 
-        fox_utils::processInput(window);
+        fox::utils::processInput(window);
         camera.processKeyboard(window, deltaTime);
 
         glClearColor(0.7f, 0.3f, 0.3f, 1.0f);

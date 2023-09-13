@@ -3,7 +3,7 @@
 #include "utils.hpp"
 
 namespace {
-    fox_utils::Camera camera;
+    fox::utils::Camera camera;
 
     constexpr unsigned int SCR_WIDTH = 800;
     constexpr unsigned int SCR_HEIGHT = 600;
