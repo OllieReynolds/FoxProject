@@ -84,7 +84,7 @@ int main() {
 
     unsigned int foxTexUnit = fox_utils::loadTexture("C:\\Users\\cubed\\FoxThing\\data\\models\\fox\\textures\\fox_material_baseColor.png");
 
-    glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+    glm::mat4 projection = glm::perspective(glm::radians(90.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
 
     float lastFrame = 0.0f;
     float deltaTime = 0.0f;
@@ -97,7 +97,7 @@ int main() {
         fox_utils::processInput(window);
         camera.processKeyboard(window, deltaTime);
 
-        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+        glClearColor(0.7f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         glUseProgram(shaderProgram);
@@ -113,8 +113,8 @@ int main() {
         int projectionLoc = glGetUniformLocation(shaderProgram, "projection");
         glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
 
-        glm::mat4 model = glm::mat4(1.0f);
-        model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+        glm::mat4 model = glm::mat4(1.f);
+        model = glm::scale(model, glm::vec3(0.1f));
         int modelLoc = glGetUniformLocation(shaderProgram, "model");
         glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 
