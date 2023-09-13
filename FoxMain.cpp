@@ -13,19 +13,26 @@
 #include "FoxRendererSetup.hpp"
 #include "FoxSceneSwitcher.hpp"
 #include "FoxTimeManager.hpp"
+#include "FoxRocketSync.hpp"
 
 int main() {
+    fox::utils::FoxRocketSync globalRocketSync("global_tracks.rocket");
+
     fox::gl::FoxGLFWSetup glfwSetup;
     GLFWwindow* window = glfwSetup.getWindow();
 
     fox::gl::FoxRendererSetup rendererSetup;
 
     fox::utils::FoxSceneSwitcher sceneSwitcher(window);
+    sceneSwitcher.setGlobalRocketSync(globalRocketSync);
+
     sceneSwitcher.switchTo("FoxScene");
 
     fox::utils::FoxTimeManager timeManager;
 
     while (!glfwWindowShouldClose(window)) {
+        globalRocketSync.update(0.0);
+
         timeManager.update();
         float deltaTime = timeManager.getDeltaTime();
 

@@ -2,6 +2,7 @@
 
 #include "FoxBaseScene.hpp"
 #include "FoxCamera.hpp"
+#include "FoxRocketSync.hpp"
 
 namespace fox {
     namespace scenes {
@@ -13,6 +14,8 @@ namespace fox {
             unsigned int foxTexUnit;
             int numVertices;
             Camera camera;
+
+            fox::utils::FoxRocketSync sceneSpecificRocket;
 
         public:
             FoxScene();

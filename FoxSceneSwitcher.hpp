@@ -5,6 +5,7 @@
 #include <string>
 #include "FoxBaseScene.hpp"
 #include <glfw3.h>
+#include "FoxRocketSync.hpp"
 
 namespace fox {
     namespace utils {
@@ -15,10 +16,13 @@ namespace fox {
             void update(float deltaTime);
             void render();
             void destroy();
+
+            void setGlobalRocketSync(FoxRocketSync& rocketSync);
         private:
             std::map<std::string, std::unique_ptr<fox::scenes::FoxBaseScene>> scenes;
             fox::scenes::FoxBaseScene* currentScene;
             GLFWwindow* window;
+            FoxRocketSync* globalRocketSync;
         };
     }
 }

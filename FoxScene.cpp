@@ -6,7 +6,7 @@
 
 namespace fox {
     namespace scenes {
-        FoxScene::FoxScene() : camera{Camera(SCR_WIDTH, SCR_HEIGHT)} 
+        FoxScene::FoxScene() : camera{Camera(SCR_WIDTH, SCR_HEIGHT)}, sceneSpecificRocket("FoxScene_tracks.rocket")
         {}
 
         void FoxScene::init(GLFWwindow* window) {
@@ -53,6 +53,8 @@ namespace fox {
         }
 
         void FoxScene::update(float deltaTime, GLFWwindow* window) {
+            sceneSpecificRocket.update(0.0);
+
             fox::utils::processInput(window);
             camera.processKeyboard(window, deltaTime);
         }
@@ -62,6 +64,12 @@ namespace fox {
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
             glUseProgram(shaderProgram);
+
+            if (globalRocketSync) {
+                float globalLightIntensity = globalRocketSync->getTrackValue("global.lightIntensity", 0.0);
+            }
+
+            float sceneSpecificParameter = sceneSpecificRocket.getTrackValue("scene.specificParameter", 0.0);
 
             glm::vec3 cameraPos = camera.getPosition();
             int lightPosLoc = glGetUniformLocation(shaderProgram, "lightPos");

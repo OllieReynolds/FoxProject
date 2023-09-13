@@ -75,6 +75,18 @@
     <ClCompile Include="FoxRendererSetup.cpp">
       <Filter>Source Files\gl</Filter>
     </ClCompile>
+    <ClCompile Include="device.c">
+      <Filter>Source Files\external</Filter>
+    </ClCompile>
+    <ClCompile Include="track.c">
+      <Filter>Source Files\external</Filter>
+    </ClCompile>
+    <ClCompile Include="FoxRocketSync.cpp">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="FoxBaseScene.cpp">
+      <Filter>Source Files\scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore">
@@ -132,6 +144,21 @@
     </ClInclude>
     <ClInclude Include="FoxRendererSetup.hpp">
       <Filter>Header Files\gl</Filter>
+    </ClInclude>
+    <ClInclude Include="base.h">
+      <Filter>Header Files\external</Filter>
+    </ClInclude>
+    <ClInclude Include="device.h">
+      <Filter>Header Files\external</Filter>
+    </ClInclude>
+    <ClInclude Include="sync.h">
+      <Filter>Header Files\external</Filter>
+    </ClInclude>
+    <ClInclude Include="track.h">
+      <Filter>Header Files\external</Filter>
+    </ClInclude>
+    <ClInclude Include="FoxRocketSync.hpp">
+      <Filter>Header Files\utils</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

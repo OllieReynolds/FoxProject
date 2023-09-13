@@ -116,7 +116,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\Users\cubed\FoxThing\data\libs\glfw\lib-vc2022;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;Ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -135,19 +135,23 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\Users\cubed\FoxThing\data\libs\glfw\lib-vc2022;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;Ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="device.c" />
+    <ClCompile Include="FoxBaseScene.cpp" />
     <ClCompile Include="FoxCamera.cpp" />
     <ClCompile Include="FoxGLFWSetup.cpp" />
     <ClCompile Include="FoxRendererSetup.cpp" />
+    <ClCompile Include="FoxRocketSync.cpp" />
     <ClCompile Include="FoxScene.cpp" />
     <ClCompile Include="FoxSceneSwitcher.cpp" />
     <ClCompile Include="FoxTimeManager.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="FoxMain.cpp" />
     <ClCompile Include="FoxUtils.cpp" />
+    <ClCompile Include="track.c" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
@@ -155,9 +159,12 @@
     <None Include="data\shaders\test.vert" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="base.h" />
+    <ClInclude Include="device.h" />
     <ClInclude Include="FoxCamera.hpp" />
     <ClInclude Include="FoxGLFWSetup.hpp" />
     <ClInclude Include="FoxRendererSetup.hpp" />
+    <ClInclude Include="FoxRocketSync.hpp" />
     <ClInclude Include="FoxScene.hpp" />
     <ClInclude Include="FoxSceneSwitcher.hpp" />
     <ClInclude Include="FoxTimeManager.hpp" />
@@ -168,8 +175,10 @@
     <ClInclude Include="FoxBaseScene.hpp" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="stb_image_write.h" />
+    <ClInclude Include="sync.h" />
     <ClInclude Include="tiny_gltf.h" />
     <ClInclude Include="FoxUtils.hpp" />
+    <ClInclude Include="track.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
