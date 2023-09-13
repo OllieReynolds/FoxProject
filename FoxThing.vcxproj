@@ -140,22 +140,23 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="glad.c" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="utils.cpp" />
+    <ClCompile Include="FoxMain.cpp" />
+    <ClCompile Include="FoxUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include=".gitignore" />
     <None Include="data\shaders\test.frag" />
     <None Include="data\shaders\test.vert" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="glad.h" />
-    <ClInclude Include="globals.hpp" />
+    <ClInclude Include="FoxGlobals.hpp" />
     <ClInclude Include="json.hpp" />
     <ClInclude Include="khrplatform.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="stb_image_write.h" />
     <ClInclude Include="tiny_gltf.h" />
-    <ClInclude Include="utils.hpp" />
+    <ClInclude Include="FoxUtils.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

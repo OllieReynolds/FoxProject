@@ -1,6 +1,6 @@
 #pragma once
 
-#include "utils.hpp"
+#include "FoxUtils.hpp"
 
 namespace {
     fox::utils::Camera camera;
