@@ -16,6 +16,8 @@
 
 #include "FoxUtils.hpp"
 #include "FoxGlobals.hpp"
+#include "FoxBaseScene.hpp"
+#include "FoxScene.hpp"
 
 int main() {
     tinygltf::Model model;

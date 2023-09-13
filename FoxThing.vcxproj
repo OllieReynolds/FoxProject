@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="FoxScene.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="FoxMain.cpp" />
     <ClCompile Include="FoxUtils.cpp" />
@@ -149,10 +150,12 @@
     <None Include="data\shaders\test.vert" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="FoxScene.hpp" />
     <ClInclude Include="glad.h" />
     <ClInclude Include="FoxGlobals.hpp" />
     <ClInclude Include="json.hpp" />
     <ClInclude Include="khrplatform.h" />
+    <ClInclude Include="FoxBaseScene.hpp" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="stb_image_write.h" />
     <ClInclude Include="tiny_gltf.h" />

@@ -19,36 +19,42 @@
     <Filter Include="Source Files\external">
       <UniqueIdentifier>{de2e7169-bbec-443b-8dc5-0233568d4b77}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\shaders">
+      <UniqueIdentifier>{fa33b60f-6e41-4715-8fb2-7c0323bf89c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\utils">
+      <UniqueIdentifier>{6e5c4c5c-055e-4823-8771-ad07f7da1bfd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\utils">
+      <UniqueIdentifier>{9a0a860a-cc41-425b-b5db-7df7947823b8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FoxMain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FoxUtils.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="glad.c">
       <Filter>Source Files\external</Filter>
     </ClCompile>
+    <ClCompile Include="FoxUtils.cpp">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="FoxScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="data\shaders\test.frag">
-      <Filter>Source Files</Filter>
-    </None>
-    <None Include="data\shaders\test.vert">
-      <Filter>Source Files</Filter>
-    </None>
     <None Include=".gitignore">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="data\shaders\test.frag">
+      <Filter>Source Files\shaders</Filter>
+    </None>
+    <None Include="data\shaders\test.vert">
+      <Filter>Source Files\shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="FoxUtils.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="FoxGlobals.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="glad.h">
       <Filter>Header Files\external</Filter>
     </ClInclude>
@@ -66,6 +72,18 @@
     </ClInclude>
     <ClInclude Include="tiny_gltf.h">
       <Filter>Header Files\external</Filter>
+    </ClInclude>
+    <ClInclude Include="FoxGlobals.hpp">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="FoxUtils.hpp">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="FoxBaseScene.hpp">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="FoxScene.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
