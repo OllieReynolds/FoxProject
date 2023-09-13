@@ -1,4 +1,5 @@
 #include "FoxUtils.hpp"
+#include "FoxCamera.hpp"
 #include <gtc/matrix_transform.hpp>
 #include <algorithm>
 
@@ -13,6 +14,9 @@
 
 namespace fox {
     namespace utils {
+        using namespace fox::camera;
+
+
         void GLAPIENTRY MessageCallback(GLenum source,
             GLenum type,
             GLuint id,
@@ -67,76 +71,6 @@ namespace fox {
                 }
             }
         }
-
-
-
-        Camera::Camera()
-            : isRightMouseButtonDown(false),
-            cameraPos(glm::vec3(0.0f, 0.0f, 3.0f)),
-            cameraFront(glm::vec3(0.0f, 0.0f, -1.0f)),
-            cameraUp(glm::vec3(0.0f, 1.0f, 0.0f)),
-            lastX(400),
-            lastY(300),
-            yaw(-90.0f),
-            pitch(0.0f),
-            firstMouse(true) {}
-
-        void Camera::setRightMouseButtonDown(bool state) {
-            isRightMouseButtonDown = state;
-        }
-
-        bool Camera::getRightMouseButtonDown() const {
-            return isRightMouseButtonDown;
-        }
-
-        glm::mat4 Camera::getViewMatrix() const {
-            return glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
-        }
-
-        void Camera::processKeyboard(GLFWwindow* window, float deltaTime) {
-            float cameraSpeed = 20.5f * deltaTime;
-            if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-                cameraPos += cameraSpeed * cameraFront;
-            if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-                cameraPos -= cameraSpeed * cameraFront;
-            if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-                cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
-            if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-                cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
-        }
-
-        glm::vec3 Camera::getPosition() const {
-            return cameraPos;
-        }
-
-        void Camera::processMouseMovement(double xpos, double ypos) {
-            if (firstMouse) {
-                lastX = xpos;
-                lastY = ypos;
-                firstMouse = false;
-            }
-
-            float xoffset = xpos - lastX;
-            float yoffset = lastY - ypos;
-            lastX = xpos;
-            lastY = ypos;
-
-            float sensitivity = 0.1f;
-            xoffset *= sensitivity;
-            yoffset *= sensitivity;
-
-            yaw += xoffset;
-            pitch += yoffset;
-
-            pitch = std::clamp(pitch, -89.0f, 89.0f);
-
-            glm::vec3 front;
-            front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
-            front.y = sin(glm::radians(pitch));
-            front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-            cameraFront = glm::normalize(front);
-        }
-
 
         std::string readFile(const std::string& filePath) {
             std::ifstream shaderFile(filePath);
@@ -231,98 +165,10 @@ namespace fox {
 
             modelData.posAccessor = posAccessor;
 
-            // Load animations
-            for (const auto& anim : model.animations) {
-                Animation animation;
-                animation.name = anim.name;
-
-                // Loop through all channels in the animation
-                for (const auto& channel : anim.channels) {
-                    AnimationChannel animChannel;
-
-                    // Node that this channel targets
-                    animChannel.nodeIndex = channel.target_node;
-
-                    // Sampler for this channel
-                    const auto& sampler = anim.samplers[channel.sampler];
-
-                    // Load keyframe data
-                    const auto& inputAccessor = model.accessors[sampler.input];
-                    const auto& outputAccessor = model.accessors[sampler.output];
-
-                    const auto& inputView = model.bufferViews[inputAccessor.bufferView];
-                    const auto& outputView = model.bufferViews[outputAccessor.bufferView];
-
-                    const float* keyframeTimestamps = reinterpret_cast<const float*>(&(model.buffers[inputView.buffer].data[inputView.byteOffset]));
-                    const float* keyframeData = reinterpret_cast<const float*>(&(model.buffers[outputView.buffer].data[outputView.byteOffset]));
-
-                    for (size_t i = 0; i < inputAccessor.count; ++i) {
-                        AnimationKeyframe keyframe;
-
-                        // Timestamp for this keyframe
-                        keyframe.timestamp = keyframeTimestamps[i];
-
-                        // Depending on the target path (translation/rotation/scale), the number of components will differ
-                        if (channel.target_path == "translation") {
-                            keyframe.position = glm::vec3(keyframeData[i * 3], keyframeData[i * 3 + 1], keyframeData[i * 3 + 2]);
-                        }
-                        else if (channel.target_path == "rotation") {
-                            keyframe.rotation = glm::quat(keyframeData[i * 4], keyframeData[i * 4 + 1], keyframeData[i * 4 + 2], keyframeData[i * 4 + 3]);
-                        }
-                        else if (channel.target_path == "scale") {
-                            keyframe.scale = glm::vec3(keyframeData[i * 3], keyframeData[i * 3 + 1], keyframeData[i * 3 + 2]);
-                        }
-
-                        animChannel.keyframes.push_back(keyframe);
-                    }
-
-                    animation.channels.push_back(animChannel);
-                }
-
-                // TODO: Compute the duration of the animation based on the keyframe timestamps
-
-                modelData.animations.push_back(animation);
-            }
+            
 
 
             return true;
-        }
-
-        glm::mat4 interpolateAnimation(const Animation& animation, float currentTime) {
-            glm::mat4 nodeTransform = glm::mat4(1.0f);
-
-            if (!animation.channels.empty()) {
-                const auto& channel = animation.channels[0];
-
-                AnimationKeyframe prevKeyframe;
-                AnimationKeyframe nextKeyframe;
-                float factor = 0.0f;
-
-                for (size_t i = 0; i < channel.keyframes.size(); ++i) {
-                    if (channel.keyframes[i].timestamp > currentTime) {
-                        nextKeyframe = channel.keyframes[i];
-                        if (i > 0) {
-                            prevKeyframe = channel.keyframes[i - 1];
-                        }
-                        factor = (currentTime - prevKeyframe.timestamp) / (nextKeyframe.timestamp - prevKeyframe.timestamp);
-                        break;
-                    }
-                }
-
-                // Interpolate position, rotation, and scale
-                glm::vec3 interpolatedPosition = glm::mix(prevKeyframe.position, nextKeyframe.position, factor);
-                glm::quat interpolatedRotation = glm::slerp(prevKeyframe.rotation, nextKeyframe.rotation, factor);
-                glm::vec3 interpolatedScale = glm::mix(prevKeyframe.scale, nextKeyframe.scale, factor);
-
-                // Create transformation matrices
-                glm::mat4 translation = glm::translate(glm::mat4(1.0f), interpolatedPosition);
-                glm::mat4 rotation = glm::mat4_cast(interpolatedRotation);
-                glm::mat4 scale = glm::scale(glm::mat4(1.0f), interpolatedScale);
-
-                nodeTransform = translation * rotation * scale;
-            }
-
-            return nodeTransform;
         }
 
         unsigned int compileShader(const std::string& vertexFilePath, const std::string& fragmentFilePath) {

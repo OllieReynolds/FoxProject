@@ -139,7 +139,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="FoxCamera.cpp" />
     <ClCompile Include="FoxScene.cpp" />
+    <ClCompile Include="FoxSceneSwitcher.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="FoxMain.cpp" />
     <ClCompile Include="FoxUtils.cpp" />
@@ -150,7 +152,9 @@
     <None Include="data\shaders\test.vert" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="FoxCamera.hpp" />
     <ClInclude Include="FoxScene.hpp" />
+    <ClInclude Include="FoxSceneSwitcher.hpp" />
     <ClInclude Include="glad.h" />
     <ClInclude Include="FoxGlobals.hpp" />
     <ClInclude Include="json.hpp" />

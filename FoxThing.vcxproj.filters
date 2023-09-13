@@ -28,6 +28,18 @@
     <Filter Include="Source Files\utils">
       <UniqueIdentifier>{9a0a860a-cc41-425b-b5db-7df7947823b8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\scenes">
+      <UniqueIdentifier>{35fa7402-b487-4df1-9185-24cb821112b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\camera">
+      <UniqueIdentifier>{f548bd8f-7388-4b26-b709-1e41ee332dbc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\camera">
+      <UniqueIdentifier>{a7b77103-2cb3-4bf9-a946-40a9ce711436}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\scenes">
+      <UniqueIdentifier>{192f0b02-506d-4ed5-989d-667bbd1fdb0b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FoxMain.cpp">
@@ -39,8 +51,14 @@
     <ClCompile Include="FoxUtils.cpp">
       <Filter>Source Files\utils</Filter>
     </ClCompile>
+    <ClCompile Include="FoxCamera.cpp">
+      <Filter>Source Files\camera</Filter>
+    </ClCompile>
     <ClCompile Include="FoxScene.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="FoxSceneSwitcher.cpp">
+      <Filter>Source Files\utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -73,17 +91,23 @@
     <ClInclude Include="tiny_gltf.h">
       <Filter>Header Files\external</Filter>
     </ClInclude>
-    <ClInclude Include="FoxGlobals.hpp">
-      <Filter>Header Files\utils</Filter>
-    </ClInclude>
     <ClInclude Include="FoxUtils.hpp">
       <Filter>Header Files\utils</Filter>
     </ClInclude>
     <ClInclude Include="FoxBaseScene.hpp">
-      <Filter>Header Files\utils</Filter>
+      <Filter>Header Files\scenes</Filter>
     </ClInclude>
     <ClInclude Include="FoxScene.hpp">
+      <Filter>Header Files\scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="FoxCamera.hpp">
+      <Filter>Header Files\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="FoxGlobals.hpp">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FoxSceneSwitcher.hpp">
+      <Filter>Header Files\utils</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

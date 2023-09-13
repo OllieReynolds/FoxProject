@@ -16,54 +16,6 @@
 
 namespace fox {
     namespace utils {
-        class Camera {
-        public:
-            Camera();
-
-            glm::mat4 getViewMatrix() const;
-            glm::vec3 getPosition() const;
-            void processKeyboard(GLFWwindow* window, float deltaTime);
-            void processMouseMovement(double xpos, double ypos);
-
-            void setRightMouseButtonDown(bool state);
-            bool getRightMouseButtonDown() const;
-
-        private:
-            glm::vec3 cameraPos;
-            glm::vec3 cameraFront;
-            glm::vec3 cameraUp;
-
-            float lastX;
-            float lastY;
-            float yaw;
-            float pitch;
-
-            bool isRightMouseButtonDown;
-            bool firstMouse;
-        };
-
-        struct AnimationKeyframe {
-            float timestamp;
-            glm::vec3 position;
-            glm::quat rotation;
-            glm::vec3 scale;
-
-            AnimationKeyframe() : timestamp(0.0f), position(0.0f), rotation(1.0f, 0.0f, 0.0f, 0.0f), scale(1.0f) {}
-        };
-
-        struct AnimationChannel {
-            int nodeIndex;
-            std::vector<AnimationKeyframe> keyframes;
-        };
-
-        struct Animation {
-            std::string name;
-            float duration;
-            std::vector<AnimationChannel> channels;
-        };
-
-        glm::mat4 interpolateAnimation(const Animation& animation, float currentTime);
-
         void mouse_callback(GLFWwindow* window, double xpos, double ypos);
         void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
         void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -93,13 +45,7 @@ namespace fox {
             float* normalBuffer;
             float* texCoordBuffer;
             tinygltf::Accessor posAccessor;
-            std::vector<Animation> animations;
-            std::vector<glm::mat4> nodeTransforms;
-            std::vector<GLTFNode> nodes;
         };
-
-        void UpdateNodeTransforms(GLTFModelData& modelData, float animationTime);
-
 
         unsigned int loadTexture(char const* path);
         bool LoadGLTFModel(const std::string& filename, tinygltf::Model& model, GLTFModelData& modelData);
