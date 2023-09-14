@@ -18,8 +18,14 @@ namespace fox {
                 auto currentVertModTime = std::filesystem::last_write_time(shaderInfo.vertPath);
                 auto currentFragModTime = std::filesystem::last_write_time(shaderInfo.fragPath);
 
-                // Check if either shader file has been modified
-                if (currentVertModTime != shaderInfo.lastModTimeVert || currentFragModTime != shaderInfo.lastModTimeFrag) {
+                // Check if the geometry shader path is not empty
+                bool geometryShaderExists = !shaderInfo.geomPath.empty();
+                auto currentGeomModTime = geometryShaderExists ? std::filesystem::last_write_time(shaderInfo.geomPath) : decltype(currentFragModTime){};
+
+                // Check if any shader file has been modified
+                if (currentVertModTime != shaderInfo.lastModTimeVert ||
+                    currentFragModTime != shaderInfo.lastModTimeFrag ||
+                    (geometryShaderExists && currentGeomModTime != shaderInfo.lastModTimeGeom)) {
                     // Delete the old program and related resources
                     glDeleteProgram(shaderInfo.program);
 
@@ -27,7 +33,8 @@ namespace fox {
                     try {
                         shaderInfo.program = fox::utils::compileShader(
                             shaderInfo.vertPath,
-                            shaderInfo.fragPath
+                            shaderInfo.fragPath,
+                            shaderInfo.geomPath
                         );
                     }
                     catch (const std::exception& e) {
@@ -38,6 +45,7 @@ namespace fox {
                     // Update the last modification times
                     shaderInfo.lastModTimeVert = currentVertModTime;
                     shaderInfo.lastModTimeFrag = currentFragModTime;
+                    shaderInfo.lastModTimeGeom = currentGeomModTime;
 
                     std::cout << "Reloaded shader: " << name << std::endl;
                 }
@@ -66,8 +74,10 @@ namespace fox {
             shaderInfo.program = program;
             shaderInfo.vertPath = vertPath;
             shaderInfo.fragPath = fragPath;
+            shaderInfo.geomPath = geomPath;
             shaderInfo.lastModTimeVert = std::filesystem::last_write_time(vertPath);
             shaderInfo.lastModTimeFrag = std::filesystem::last_write_time(fragPath);
+            shaderInfo.lastModTimeGeom = std::filesystem::last_write_time(geomPath);
 
             // Add the ShaderInfo struct to the shaders map
             shaders[name] = shaderInfo;

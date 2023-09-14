@@ -11,8 +11,8 @@ uniform sampler2D foxTex;
 
 // Constants for attenuation
 float constant = 1.0;
-float linear = 0.09;
-float quadratic = 0.032;
+float linear = 0.00005;
+float quadratic = 0.0002;
 
 // Ambient term (Le in Rendering Equation)
 vec3 ambientTerm = vec3(0.5);
@@ -24,6 +24,7 @@ void main()
 {
     vec3 norm = normalize(faceNormal);
     vec3 lightDir = normalize(lightPos - GeomFragPos);
+	vec3 viewDir = normalize(-GeomFragPos);
 
     // Calculate attenuation
     float distance = length(lightPos - GeomFragPos);

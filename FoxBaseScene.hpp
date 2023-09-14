@@ -37,8 +37,10 @@ namespace fox {
                 unsigned int program;
                 std::string vertPath;
                 std::string fragPath;
+                std::string geomPath;
                 std::filesystem::file_time_type lastModTimeVert;
                 std::filesystem::file_time_type lastModTimeFrag;
+                std::filesystem::file_time_type lastModTimeGeom;
             };
 
             // Protected Member Functions
