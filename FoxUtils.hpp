@@ -14,13 +14,20 @@
 
 #include "glad.h"
 
+
+namespace fox {
+    namespace scenes {
+        class FoxBaseScene;
+    }
+}
+
 namespace fox {
     namespace utils {
         void mouse_callback(GLFWwindow* window, double xpos, double ypos);
         void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
         void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
-        void processInput(GLFWwindow* window);
+        void processInput(GLFWwindow* window, fox::scenes::FoxBaseScene& scene);
 
         void GLAPIENTRY MessageCallback(GLenum source, GLenum type,
             GLuint id,

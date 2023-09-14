@@ -24,10 +24,7 @@ namespace fox {
                 throw std::runtime_error("Failed to load GLTF model");
             }
 
-            shaderProgram = fox::utils::compileShader(
-                fox::utils::getConfig("vertShaderPath"),
-                fox::utils::getConfig("fragShaderPath")
-            );
+            addShader("main", fox::utils::getConfig("vertShaderPath"), fox::utils::getConfig("fragShaderPath"));
 
             numVertices = modelData.posAccessor.count;
 
@@ -56,15 +53,23 @@ namespace fox {
         }
 
         void FoxScene::update(float deltaTime, GLFWwindow* window) {
+            fox::utils::processInput(window, *this);
+
             sceneSpecificRocket.update(0.0);
 
-            fox::utils::processInput(window);
             camera.processKeyboard(window, deltaTime);
+
+            reloadShadersIfModified();
         }
 
         void FoxScene::render() {
             glClearColor(0.7f, 0.3f, 0.3f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+            unsigned int shaderProgram = getShaderProgram("main");
+            if (shaderProgram == 0) {
+                return;
+            }
 
             glUseProgram(shaderProgram);
 
@@ -101,7 +106,12 @@ namespace fox {
         void FoxScene::destroy() {
             glDeleteVertexArrays(1, &VAO);
             glDeleteBuffers(1, &VBO);
-            glDeleteProgram(shaderProgram);
+
+            for (const auto& [name, shaderInfo] : shaders) {
+                glDeleteProgram(shaderInfo.program);
+            }
+
+            shaders.clear();
         }
     }
 }

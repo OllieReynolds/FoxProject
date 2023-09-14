@@ -12,6 +12,8 @@
 
 #include "glad.h"
 
+#include "FoxBaseScene.hpp"
+
 namespace fox {
     namespace utils {
         using namespace fox::camera;
@@ -29,9 +31,13 @@ namespace fox {
                 type, severity, message);
         }
 
-        void processInput(GLFWwindow* window) {
+        void processInput(GLFWwindow* window, fox::scenes::FoxBaseScene& scene) {
             if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
                 glfwSetWindowShouldClose(window, true);
+
+            if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS) {
+                scene.setReloadShadersFlag(true);
+            }
         }
 
         void framebuffer_size_callback(GLFWwindow* window, int width, int height) {

@@ -10,7 +10,6 @@ namespace fox {
 
         class FoxScene : public FoxBaseScene {
             unsigned int VAO, VBO;
-            unsigned int shaderProgram;
             unsigned int foxTexUnit;
             int numVertices;
             Camera camera;
