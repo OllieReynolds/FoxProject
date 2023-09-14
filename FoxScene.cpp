@@ -8,7 +8,7 @@
 
 namespace fox {
     namespace scenes {
-        FoxScene::FoxScene() : camera{Camera(SCR_WIDTH, SCR_HEIGHT)}, sceneSpecificRocket(fox::utils::RocketTracks::SCENE_SPECIFIC_PARAMETER.c_str())
+        FoxScene::FoxScene() : foxTexUnit{ 0 }, camera { Camera(SCR_WIDTH, SCR_HEIGHT) }, sceneSpecificRocket(fox::utils::RocketTracks::SCENE_SPECIFIC_PARAMETER.c_str())
         {}
 
         void FoxScene::init(GLFWwindow* window) {
@@ -18,7 +18,7 @@ namespace fox {
 
             mesh = std::make_unique<fox::utils::FoxMesh>(fox::utils::getConfig("modelPath"));
 
-            addShader("main", fox::utils::getConfig("vertShaderPath"), fox::utils::getConfig("fragShaderPath"));
+            addShader("main", fox::utils::getConfig("vertShaderPath"), fox::utils::getConfig("fragShaderPath"), fox::utils::getConfig("geomShaderPath"));
 
             foxTexUnit = fox::utils::loadTexture(fox::utils::getConfig("texturePath").c_str());
         }
@@ -62,7 +62,7 @@ namespace fox {
             glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(camera.getProjectionMatrix()));
 
             glm::mat4 model = glm::mat4(1.f);
-            model = glm::scale(model, glm::vec3(0.1f));
+            model = glm::scale(model, glm::vec3(1.f));
             int modelLoc = glGetUniformLocation(shaderProgram, "model");
             glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 

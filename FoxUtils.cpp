@@ -104,12 +104,21 @@ namespace fox {
 
                 glBindTexture(GL_TEXTURE_2D, textureID);
                 glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+
                 glGenerateMipmap(GL_TEXTURE_2D);
+                fge();
 
                 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
                 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+                GLfloat maxAnisotropy;
+                glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &maxAnisotropy);
+                glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, maxAnisotropy);
+                fge();
+
                 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
                 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+                fge();
 
                 stbi_image_free(data);
             }
@@ -177,7 +186,7 @@ namespace fox {
             return true;
         }
 
-        unsigned int compileShader(const std::string& vertexFilePath, const std::string& fragmentFilePath) {
+        unsigned int compileShader(const std::string& vertexFilePath, const std::string& fragmentFilePath, const std::string& geometryFilePath) {
             std::string vertexShaderCode = readFile(vertexFilePath);
             std::string fragmentShaderCode = readFile(fragmentFilePath);
             const char* vertexShaderSource = vertexShaderCode.c_str();
@@ -203,9 +212,29 @@ namespace fox {
                 std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
             }
 
+            unsigned int geometryShader;
+            if (!geometryFilePath.empty()) {
+                std::string geometryShaderCode = readFile(geometryFilePath);
+                const char* geometryShaderSource = geometryShaderCode.c_str();
+
+                geometryShader = glCreateShader(GL_GEOMETRY_SHADER);
+                glShaderSource(geometryShader, 1, &geometryShaderSource, NULL);
+                glCompileShader(geometryShader);
+                int success;
+                char infoLog[512];
+                glGetShaderiv(geometryShader, GL_COMPILE_STATUS, &success);
+                if (!success) {
+                    glGetShaderInfoLog(geometryShader, 512, NULL, infoLog);
+                    std::cout << "ERROR::SHADER::GEOMETRY::COMPILATION_FAILED\n" << infoLog << std::endl;
+                }
+            }
+
             unsigned int shaderProgram = glCreateProgram();
             glAttachShader(shaderProgram, vertexShader);
             glAttachShader(shaderProgram, fragmentShader);
+            if (!geometryFilePath.empty()) {
+                glAttachShader(shaderProgram, geometryShader);
+            }
             glLinkProgram(shaderProgram);
             glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
             if (!success) {
@@ -215,6 +244,9 @@ namespace fox {
 
             glDeleteShader(vertexShader);
             glDeleteShader(fragmentShader);
+            if (!geometryFilePath.empty()) {
+                glDeleteShader(geometryShader);
+            }
 
             return shaderProgram;
         }

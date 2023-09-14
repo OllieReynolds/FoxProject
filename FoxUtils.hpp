@@ -61,7 +61,7 @@ namespace fox {
         // Utility Functions
         unsigned int loadTexture(char const* path);
         bool LoadGLTFModel(const std::string& filename, tinygltf::Model& model, GLTFModelData& modelData);
-        unsigned int compileShader(const std::string& vertexFilePath, const std::string& fragmentFilePath);
+        unsigned int compileShader(const std::string& vertexFilePath, const std::string& fragmentFilePath, const std::string& geometryFilePath = "");
         std::vector<float> interleaveData(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texCoords, int vertexSize);
 
         // Error Checking

@@ -44,7 +44,7 @@ namespace fox {
             }
         }
 
-        void FoxBaseScene::addShader(const std::string& name, const std::string& vertPath, const std::string& fragPath) {
+        void FoxBaseScene::addShader(const std::string& name, const std::string& vertPath, const std::string& fragPath, const std::string& geomPath) {
             // Check if a shader with the given name already exists
             if (shaders.find(name) != shaders.end()) {
                 std::cerr << "Shader with name '" << name << "' already exists." << std::endl;
@@ -54,7 +54,7 @@ namespace fox {
             // Compile the shader program
             unsigned int program;
             try {
-                program = fox::utils::compileShader(vertPath, fragPath);
+                program = fox::utils::compileShader(vertPath, fragPath, geomPath);
             }
             catch (const std::exception& e) {
                 std::cerr << "Failed to add shader: " << e.what() << std::endl;

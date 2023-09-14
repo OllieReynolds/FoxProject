@@ -158,6 +158,7 @@
   <ItemGroup>
     <None Include=".gitignore" />
     <None Include="data\shaders\test.frag" />
+    <None Include="data\shaders\test.geom" />
     <None Include="data\shaders\test.vert" />
   </ItemGroup>
   <ItemGroup>

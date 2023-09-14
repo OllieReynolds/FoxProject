@@ -42,7 +42,7 @@ namespace fox {
             };
 
             // Protected Member Functions
-            void addShader(const std::string& name, const std::string& vertPath, const std::string& fragPath);
+            void addShader(const std::string& name, const std::string& vertPath, const std::string& fragPath, const std::string& geomPath = "");
             void reloadShadersIfModified();
             void checkForShaderReload();
             unsigned int getShaderProgram(const std::string& name);

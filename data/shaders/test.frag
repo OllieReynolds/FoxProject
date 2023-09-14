@@ -1,30 +1,44 @@
 #version 460 core
 out vec4 FragColor;
 
-in vec3 FragPos;
-in vec3 Normal;
+smooth in vec3 GeomFragPos;  // Input from the geometry shader
+smooth in vec2 GeomTexCoord;  // Input from the geometry shader
 in vec2 TexCoord;
+flat in vec3 faceNormal;
 
 uniform vec3 lightPos;
 uniform sampler2D foxTex;
+
+// Constants for attenuation
+float constant = 1.0;
+float linear = 0.09;
+float quadratic = 0.032;
+
+// Ambient term (Le in Rendering Equation)
+vec3 ambientTerm = vec3(0.5);
 
 // Light properties
 vec3 lightColor = vec3(1.0f, 1.0f, 1.0f);
 
 void main()
 {
-    // Ambient
-    float ambientStrength = 0.4;
-    vec3 ambient = ambientStrength * lightColor;
+    vec3 norm = normalize(faceNormal);
+    vec3 lightDir = normalize(lightPos - GeomFragPos);
 
-    // Diffuse
-    vec3 norm = normalize(Normal);
-    vec3 lightDir = normalize(lightPos - FragPos);
-    float diff = max(dot(norm, lightDir), 0.0);
-    vec3 diffuse = diff * lightColor;
+    // Calculate attenuation
+    float distance = length(lightPos - GeomFragPos);
+    float attenuation = 1.0 / (constant + linear * distance + quadratic * (distance * distance));
 
-    vec3 textureColor = texture(foxTex, TexCoord).rgb;
+    // Compute incoming light
+    vec3 Li = lightColor * attenuation;
 
-    vec3 result = (ambient + diffuse) * textureColor;
-    FragColor = vec4(result, 1.0);
+    // Compute the Rendering Equation
+    vec3 brdf = vec3(max(0.0, dot(norm, lightDir)));  // Using Lambertian reflection
+    vec3 Lo = ambientTerm  + brdf * Li * max(0.0, dot(norm, lightDir));
+
+    vec3 textureColor = texture(foxTex, GeomTexCoord).rgb;
+
+    // Final color
+    vec3 finalColor = Lo * textureColor;
+    FragColor = vec4(finalColor, 1.0);
 }

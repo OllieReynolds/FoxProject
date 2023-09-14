@@ -18,7 +18,7 @@ namespace fox {
             yaw(-90.0f),
             pitch(0.0f),
             firstMouse(true),
-            projection{ glm::perspective(glm::radians(90.0f), (float)projection_w / (float)projection_h, 0.1f, 100.0f) }
+            projection{ glm::perspective(glm::radians(90.0f), (float)projection_w / (float)projection_h, 0.1f, 1000.0f) }
         { }
 
         void Camera::setRightMouseButtonDown(bool state) {
@@ -38,7 +38,7 @@ namespace fox {
         }
 
         void Camera::processKeyboard(GLFWwindow* window, float deltaTime) {
-            float cameraSpeed = 20.5f * deltaTime;
+            float cameraSpeed = 40.5f * deltaTime;
             if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
                 cameraPos += cameraSpeed * cameraFront;
             if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
