@@ -5,6 +5,9 @@
 
 namespace fox {
     namespace scenes {
+
+        FoxBaseScene::~FoxBaseScene() {}
+
         void FoxBaseScene::setGlobalRocketSync(fox::utils::FoxRocketSync& globalRocketSync) {
             this->globalRocketSync = &globalRocketSync;
         }
