@@ -1,0 +1,4 @@
+modelPath=C:\\Users\\cubed\\FoxThing\\data\\models\\fox\\scene.gltf
+texturePath=C:\\Users\\cubed\\FoxThing\\data\\models\\fox\\textures\\fox_material_baseColor.png
+vertShaderPath=C:\\Users\\cubed\\FoxThing\\data\\shaders\\test.vert
+fragShaderPath=C:\\Users\\cubed\\FoxThing\\data\\shaders\\test.frag

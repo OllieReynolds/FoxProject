@@ -14,22 +14,28 @@
 #include "FoxSceneSwitcher.hpp"
 #include "FoxTimeManager.hpp"
 #include "FoxRocketSync.hpp"
+#include "FoxRocketTrackNames.hpp"
 
 int main() {
-    fox::utils::FoxRocketSync globalRocketSync("global_tracks.rocket");
+    // Initialize Rocket Sync
+    fox::utils::FoxRocketSync globalRocketSync(fox::utils::RocketTracks::GLOBAL_LIGHT_INTENSITY.c_str());
 
+    // Setup GLFW and window
     fox::gl::FoxGLFWSetup glfwSetup;
     GLFWwindow* window = glfwSetup.getWindow();
 
+    // Setup OpenGL renderer
     fox::gl::FoxRendererSetup rendererSetup;
 
+    // Initialize Scene Switcher
     fox::utils::FoxSceneSwitcher sceneSwitcher(window);
     sceneSwitcher.setGlobalRocketSync(globalRocketSync);
-
     sceneSwitcher.switchTo("FoxScene");
 
+    // Initialize Time Manager
     fox::utils::FoxTimeManager timeManager;
 
+    // Main loop
     while (!glfwWindowShouldClose(window)) {
         globalRocketSync.update(0.0);
 
@@ -43,6 +49,7 @@ int main() {
         glfwPollEvents();
     }
 
+    // Cleanup
     sceneSwitcher.destroy();
 
     glfwTerminate();

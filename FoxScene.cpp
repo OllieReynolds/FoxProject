@@ -1,12 +1,14 @@
 #include "FoxScene.hpp"
 #include "FoxUtils.hpp"
 #include "FoxGlobals.hpp"
+#include "FoxRocketTrackNames.hpp"
+#include "FoxConfigurationManager.hpp"
 
 #include <stdexcept>
 
 namespace fox {
     namespace scenes {
-        FoxScene::FoxScene() : camera{Camera(SCR_WIDTH, SCR_HEIGHT)}, sceneSpecificRocket("FoxScene_tracks.rocket")
+        FoxScene::FoxScene() : camera{Camera(SCR_WIDTH, SCR_HEIGHT)}, sceneSpecificRocket(fox::utils::RocketTracks::SCENE_SPECIFIC_PARAMETER.c_str())
         {}
 
         void FoxScene::init(GLFWwindow* window) {
@@ -17,13 +19,13 @@ namespace fox {
             tinygltf::Model model;
             fox::utils::GLTFModelData modelData;
 
-            if (!fox::utils::LoadGLTFModel("C:\\Users\\cubed\\FoxThing\\data\\models\\fox\\scene.gltf", model, modelData)) {
+            if (!fox::utils::LoadGLTFModel(fox::utils::getConfig("modelPath"), model, modelData)) {
                 throw std::runtime_error("Failed to load GLTF model");
             }
 
             shaderProgram = fox::utils::compileShader(
-                "C:\\Users\\cubed\\FoxThing\\data\\shaders\\test.vert",
-                "C:\\Users\\cubed\\FoxThing\\data\\shaders\\test.frag"
+                fox::utils::getConfig("vertShaderPath"),
+                fox::utils::getConfig("fragShaderPath")
             );
 
             numVertices = modelData.posAccessor.count;
@@ -49,7 +51,7 @@ namespace fox {
             glBindBuffer(GL_ARRAY_BUFFER, 0);
             glBindVertexArray(0);
 
-            foxTexUnit = fox::utils::loadTexture("C:\\Users\\cubed\\FoxThing\\data\\models\\fox\\textures\\fox_material_baseColor.png");
+            foxTexUnit = fox::utils::loadTexture(fox::utils::getConfig("texturePath").c_str());
         }
 
         void FoxScene::update(float deltaTime, GLFWwindow* window) {
@@ -66,10 +68,10 @@ namespace fox {
             glUseProgram(shaderProgram);
 
             if (globalRocketSync) {
-                float globalLightIntensity = globalRocketSync->getTrackValue("global.lightIntensity", 0.0);
+                float globalLightIntensity = globalRocketSync->getTrackValue(fox::utils::RocketTracks::GLOBAL_LIGHT_INTENSITY.c_str(), 0.0);
             }
 
-            float sceneSpecificParameter = sceneSpecificRocket.getTrackValue("scene.specificParameter", 0.0);
+            float sceneSpecificParameter = sceneSpecificRocket.getTrackValue(fox::utils::RocketTracks::SCENE_SPECIFIC_PARAMETER.c_str(), 0.0);
 
             glm::vec3 cameraPos = camera.getPosition();
             int lightPosLoc = glGetUniformLocation(shaderProgram, "lightPos");

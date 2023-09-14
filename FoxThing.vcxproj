@@ -142,6 +142,7 @@
     <ClCompile Include="device.c" />
     <ClCompile Include="FoxBaseScene.cpp" />
     <ClCompile Include="FoxCamera.cpp" />
+    <ClCompile Include="FoxConfigurationManager.cpp" />
     <ClCompile Include="FoxGLFWSetup.cpp" />
     <ClCompile Include="FoxRendererSetup.cpp" />
     <ClCompile Include="FoxRocketSync.cpp" />
@@ -162,9 +163,11 @@
     <ClInclude Include="base.h" />
     <ClInclude Include="device.h" />
     <ClInclude Include="FoxCamera.hpp" />
+    <ClInclude Include="FoxConfigurationManager.hpp" />
     <ClInclude Include="FoxGLFWSetup.hpp" />
     <ClInclude Include="FoxRendererSetup.hpp" />
     <ClInclude Include="FoxRocketSync.hpp" />
+    <ClInclude Include="FoxRocketTrackNames.hpp" />
     <ClInclude Include="FoxScene.hpp" />
     <ClInclude Include="FoxSceneSwitcher.hpp" />
     <ClInclude Include="FoxTimeManager.hpp" />
@@ -179,6 +182,9 @@
     <ClInclude Include="tiny_gltf.h" />
     <ClInclude Include="FoxUtils.hpp" />
     <ClInclude Include="track.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="config.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
