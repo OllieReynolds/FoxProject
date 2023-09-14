@@ -144,6 +144,7 @@
     <ClCompile Include="FoxCamera.cpp" />
     <ClCompile Include="FoxConfigurationManager.cpp" />
     <ClCompile Include="FoxGLFWSetup.cpp" />
+    <ClCompile Include="FoxMesh.cpp" />
     <ClCompile Include="FoxRendererSetup.cpp" />
     <ClCompile Include="FoxRocketSync.cpp" />
     <ClCompile Include="FoxScene.cpp" />
@@ -165,6 +166,7 @@
     <ClInclude Include="FoxCamera.hpp" />
     <ClInclude Include="FoxConfigurationManager.hpp" />
     <ClInclude Include="FoxGLFWSetup.hpp" />
+    <ClInclude Include="FoxMesh.hpp" />
     <ClInclude Include="FoxRendererSetup.hpp" />
     <ClInclude Include="FoxRocketSync.hpp" />
     <ClInclude Include="FoxRocketTrackNames.hpp" />

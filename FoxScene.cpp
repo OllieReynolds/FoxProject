@@ -16,38 +16,9 @@ namespace fox {
             glfwSetMouseButtonCallback(window, fox::utils::mouse_button_callback);
             glfwSetWindowUserPointer(window, &camera);
 
-            tinygltf::Model model;
-            fox::utils::GLTFModelData modelData;
-
-            auto s = fox::utils::getConfig("modelPath");
-            if (!fox::utils::LoadGLTFModel(fox::utils::getConfig("modelPath"), model, modelData)) {
-                throw std::runtime_error("Failed to load GLTF model");
-            }
+            mesh = std::make_unique<fox::utils::FoxMesh>(fox::utils::getConfig("modelPath"));
 
             addShader("main", fox::utils::getConfig("vertShaderPath"), fox::utils::getConfig("fragShaderPath"));
-
-            numVertices = modelData.posAccessor.count;
-
-            std::vector<float> positionVec(modelData.positionBuffer, modelData.positionBuffer + numVertices * 3);
-            std::vector<float> normalVec(modelData.normalBuffer, modelData.normalBuffer + numVertices * 3);
-            std::vector<float> texCoordVec(modelData.texCoordBuffer, modelData.texCoordBuffer + numVertices * 2);
-            std::vector<float> interleavedData = fox::utils::interleaveData(positionVec, normalVec, texCoordVec, 8);
-
-            glGenVertexArrays(1, &VAO);
-            glGenBuffers(1, &VBO);
-            glBindVertexArray(VAO);
-
-            glBindBuffer(GL_ARRAY_BUFFER, VBO);
-            glBufferData(GL_ARRAY_BUFFER, interleavedData.size() * sizeof(float), &interleavedData[0], GL_STATIC_DRAW);
-            glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-            glEnableVertexAttribArray(0);
-            glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-            glEnableVertexAttribArray(1);
-            glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-            glEnableVertexAttribArray(2);
-
-            glBindBuffer(GL_ARRAY_BUFFER, 0);
-            glBindVertexArray(0);
 
             foxTexUnit = fox::utils::loadTexture(fox::utils::getConfig("texturePath").c_str());
         }
@@ -99,13 +70,11 @@ namespace fox {
             glBindTexture(GL_TEXTURE_2D, foxTexUnit);
             glUniform1i(glGetUniformLocation(shaderProgram, "foxTex"), 0);
 
-            glBindVertexArray(VAO);
-            glDrawArrays(GL_TRIANGLES, 0, numVertices);
+            mesh->draw();
         }
 
         void FoxScene::destroy() {
-            glDeleteVertexArrays(1, &VAO);
-            glDeleteBuffers(1, &VBO);
+            mesh->destroy();
 
             for (const auto& [name, shaderInfo] : shaders) {
                 glDeleteProgram(shaderInfo.program);

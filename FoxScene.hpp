@@ -4,6 +4,7 @@
 #include "FoxBaseScene.hpp"
 #include "FoxCamera.hpp"
 #include "FoxRocketSync.hpp"
+#include "FoxMesh.hpp"
 
 // Forward Declarations
 struct GLFWwindow;
@@ -29,9 +30,8 @@ namespace fox {
 
         private:
             // Private Member Variables
-            unsigned int VAO, VBO;
             unsigned int foxTexUnit;
-            int numVertices;
+            std::unique_ptr<fox::utils::FoxMesh> mesh;
             Camera camera;
 
             // Sync

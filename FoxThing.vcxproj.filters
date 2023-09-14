@@ -90,6 +90,9 @@
     <ClCompile Include="FoxConfigurationManager.cpp">
       <Filter>Source Files\utils</Filter>
     </ClCompile>
+    <ClCompile Include="FoxMesh.cpp">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore">
@@ -167,6 +170,9 @@
       <Filter>Header Files\utils</Filter>
     </ClInclude>
     <ClInclude Include="FoxConfigurationManager.hpp">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="FoxMesh.hpp">
       <Filter>Header Files\utils</Filter>
     </ClInclude>
   </ItemGroup>
