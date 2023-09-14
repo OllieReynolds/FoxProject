@@ -19,6 +19,7 @@ namespace fox {
             tinygltf::Model model;
             fox::utils::GLTFModelData modelData;
 
+            auto s = fox::utils::getConfig("modelPath");
             if (!fox::utils::LoadGLTFModel(fox::utils::getConfig("modelPath"), model, modelData)) {
                 throw std::runtime_error("Failed to load GLTF model");
             }

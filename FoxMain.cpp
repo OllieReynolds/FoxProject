@@ -15,8 +15,14 @@
 #include "FoxTimeManager.hpp"
 #include "FoxRocketSync.hpp"
 #include "FoxRocketTrackNames.hpp"
+#include "FoxConfigurationManager.hpp"
 
 int main() {
+    // Load Global config
+    fox::utils::FoxConfigurationManager& configManager = fox::utils::FoxConfigurationManager::getInstance();
+    configManager.loadConfig("C:\\Users\\cubed\\FoxThing\\config.txt");
+
+
     // Initialize Rocket Sync
     fox::utils::FoxRocketSync globalRocketSync(fox::utils::RocketTracks::GLOBAL_LIGHT_INTENSITY.c_str());
 
